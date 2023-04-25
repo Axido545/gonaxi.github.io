@@ -12,6 +12,10 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
+//pour fermer le bouton (x) je commence par créer une constante qui récupère l'élément
+const close = document.querySelector(".close");
+
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -21,3 +25,10 @@ function launchModal() {
 }
 
 
+//close btn X
+close.addEventListener("click",closeModal);
+
+function closeModal(){
+  modalbg.style.display = "none";
+
+}
