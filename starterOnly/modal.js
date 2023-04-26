@@ -11,7 +11,18 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+// J'ajoute le bouton validier du formulaire 
 const submit = document.getElementById("submit");
+//l'ajout des éléments du formulaire
+const firstName = document.getElementById("first");
+const lastName = document.getElementById("last");
+const eMail = document.getElementById("email");
+const birthDate = document.getElementById("birthdate");
+const numberOfTournement = document.getElementById("quantity")
+const townOfTournement = document.querySelectorAll('input[name="location"]');
+const termsOfUse = document.getElementById("checkbox1");
+const errorText = document.querySelector(".error")
+
 
 
 //pour fermer le bouton (x) je commence par créer une constante qui récupère l'élément
@@ -35,15 +46,118 @@ function closeModal(){
   modalbg.style.display = "none";
 
 }
+console.log(formData)
 
 //validateForm
 submit.addEventListener("click",validate);
 
-/**************formulaire de validation***************** */
 
 
-function validate () {
+
+/**************formulaire de validation*****************/
+
+
+
+function validate (result) {
+result.preventDefault();
+
+  let myF = firstName.value;
+
+  //Le champ Prénom a un minimum de 2 caractères / n'est pas vide.
+
+if ( myF.length < 3 || myF  == "" ) {
+
+    errorText.innerHTML ="la saisie est incorrect"
+
+
+  } else {
+
+    errorText.innerHTML ="c'est bon pour le first name"
+
+  }
 
   
-   console.log("ok");
-}
+  //Le champ Nom de famille a un minimum de 2 caractères / n'est pas vide.
+
+  let myL = lastName.value;
+
+
+if ( myL.length < 3 || myL  == "" ) {
+
+    errorText.innerHTML ="la saisie est incorrect"
+
+
+  } else {
+
+    errorText.innerHTML ="c'est bon pour le laste name"
+
+  }
+
+  // vérif L'adresse électronique est valide.
+
+    
+    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    let resultat = mailformat.test(eMail.value)
+
+
+    if (!resultat) {
+      errorText.innerHTML = "Veuillez entrer une adresse email valide";
+      return false;
+    }
+  
+    if (resultat) {
+      errorText.innerHTML = ""
+      return true;
+    }
+
+
+    
+  
+    
+    console.log(resultat);
+    console.log(eMail.value)
+    
+  
+    
+    }
+  
+  
+  
+  
+  
+  
+  
+
+  
+
+
+
+
+
+/*****
+ * 
+ * (1) Lier les labels aux entrées dans le HTML en utilisant les attributs "for" et "id" dans le code existant. Corriger le code HTML quand nécessaire.
+(2) Utiliser du JavaScript pur (pas de jQuery) pour terminer le formulaire :
+
+    Le formulaire doit être valide quand l'utilisateur clique sur "Submit"
+
+
+
+
+    Les données doivent être saisies correctement :
+    (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide.
+    (2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide.
+    (3) L'adresse électronique est valide.
+    (4) Pour le nombre de concours, une valeur numérique est saisie.
+    (5) Un bouton radio est sélectionné.
+    (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
+    Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
+
+ * 
+ * 
+ * 
+ * 
+ */
+
+ 
