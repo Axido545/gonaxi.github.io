@@ -11,6 +11,8 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+const submit = document.getElementById("submit");
+
 
 //pour fermer le bouton (x) je commence par créer une constante qui récupère l'élément
 const close = document.querySelector(".close");
@@ -28,7 +30,20 @@ function launchModal() {
 //close btn X
 close.addEventListener("click",closeModal);
 
+
 function closeModal(){
   modalbg.style.display = "none";
 
+}
+
+//validateForm
+submit.addEventListener("click",validate);
+
+/**************formulaire de validation***************** */
+
+
+function validate () {
+
+  
+   console.log("ok");
 }
