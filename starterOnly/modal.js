@@ -23,49 +23,108 @@ const townOfTournement = document.querySelectorAll('input[name="location"]');
 const termsOfUse = document.getElementById("checkbox1");
 const errorText = document.querySelector(".error")
 let form = document.querySelector("#form-content");
+
+
+
+
+
+
+
 let validEmailMsg = document.querySelector('.validator-email');
 
-let b = form.email.innerHTML
 
 
 
+/////////////********vérif du prénom********************** ///////////////////////
+let verifPrenom = function() {
+  validPrenom(this)
+}
+
+
+//écouter modif du prénom
+form.first.addEventListener('change', verifPrenom);
+
+//récupération de l'élément pour poster le message
+let validFirstMsg = document.querySelector('.validator-first');
+
+
+const validPrenom = function(prenomPosted) {
+  console.log(prenomPosted);
+
+
+
+// si la taille du prénom est inférieur à 3 alors c'est pas valide
+if(prenomPosted.value.length < 3) {
+
+  validFirstMsg.innerHTML = "Le prénom n'est pas valide ";
+    validFirstMsg.style.color = 'red';
+
+} else {
+  validFirstMsg.innerHTML = "Le prénom est valide ";
+  validFirstMsg.style.color = 'green';
+}
+
+}
+
+/////////////********vérif du prénom********************** ///////////////////////
+let verifNom = function() {
+  validNom(this)
+}
+
+
+//écouter modif du nom
+form.last.addEventListener('change', verifNom);
+
+//récupération de l'élément pour poster le message
+let validLastMsg = document.querySelector('.validator-last');
+
+
+const validNom = function(nomPosted) {
+  console.log(nomPosted);
+
+
+
+// si la taille du nom est inférieur à 3 alors c'est pas valide
+if(nomPosted.value.length < 3) {
+
+  validLastMsg.innerHTML = "Le nom n'est pas valide ";
+    validLastMsg.style.color = 'red';
+
+} else {
+  validLastMsg.innerHTML = "Le nom est valide ";
+  validLastMsg.style.color = 'green';
+}
+
+
+
+}
+
+/////////////********vérif de l'email********************** ///////////////////////
+let verifMail = function(){
+  validEmail(this);
+}
 
 // écouter modif de l'email
-form.email.addEventListener('change', function(){
-  validEmail(this);
-});
+form.email.addEventListener('change',verifMail);
+
+
+
 
 const validEmail = function(emailPosted){
   //création de la reg exp (expression régulière) pour validation email
-  let emailRegExpControl = new RegExp(
-    
-    '^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g'
-  
-  )
-
- 
-  
-
-
-
+  let emailRegExpControl = new RegExp('^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g')
 
   if(emailRegExpControl.test(emailPosted.value)) {
-   
-    validEmailMsg.innerHTML = "L'adresse email est valide ";
-  validEmailMsg.style.color = 'green';
-  validEmailMsg.style.fontSize ="14px"
-  
 
+    validEmailMsg.innerHTML = "L'adresse email est valide ";
+    validEmailMsg.style.color = 'green';
 
   } else {
 
     validEmailMsg.innerHTML = "L'adresse email n'est pas valide";
     validEmailMsg.style.color = 'red' ;
-    validEmailMsg.style.fontSize ="14px"
-
 
   }
-
 };
 
 
@@ -194,7 +253,7 @@ if ( myL.length < 3 || myL  == "" ) {
 
 
     Les données doivent être saisies correctement :
-    (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide.
+    (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide. OK
     (2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide.
     (3) L'adresse électronique est valide.
     (4) Pour le nombre de concours, une valeur numérique est saisie.
