@@ -22,6 +22,53 @@ const numberOfTournement = document.getElementById("quantity")
 const townOfTournement = document.querySelectorAll('input[name="location"]');
 const termsOfUse = document.getElementById("checkbox1");
 const errorText = document.querySelector(".error")
+let form = document.querySelector("#form-content");
+let validEmailMsg = document.querySelector('.validator-email');
+
+let b = form.email.innerHTML
+
+
+
+
+// écouter modif de l'email
+form.email.addEventListener('change', function(){
+  validEmail(this);
+});
+
+const validEmail = function(emailPosted){
+  //création de la reg exp (expression régulière) pour validation email
+  let emailRegExpControl = new RegExp(
+    
+    '^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g'
+  
+  )
+
+ 
+  
+
+
+
+
+  if(emailRegExpControl.test(emailPosted.value)) {
+   
+    validEmailMsg.innerHTML = "L'adresse email est valide ";
+  validEmailMsg.style.color = 'green';
+  validEmailMsg.style.fontSize ="14px"
+  
+
+
+  } else {
+
+    validEmailMsg.innerHTML = "L'adresse email n'est pas valide";
+    validEmailMsg.style.color = 'red' ;
+    validEmailMsg.style.fontSize ="14px"
+
+
+  }
+
+};
+
+
 
 
 
@@ -46,15 +93,15 @@ function closeModal(){
   modalbg.style.display = "none";
 
 }
-console.log(formData)
+//console.log(formData)
 
 //validateForm
-submit.addEventListener("click",validate);
+//submit.addEventListener("click",validate);
 
 
 
 
-/**************formulaire de validation*****************/
+/**************formulaire de validation**********
 
 
 
@@ -127,11 +174,6 @@ if ( myL.length < 3 || myL  == "" ) {
     console.log(eMail.innerText + " text"); 
   
   
-  let identif = ' blabla telegram ok'
-  let identifRegExp = new RegExp("telegram")
-
-  //console.log(/telegram/.test(identif));
-  console.log(identifRegExp.test(identif));
 
   
 
@@ -141,7 +183,7 @@ if ( myL.length < 3 || myL  == "" ) {
 
 
 
-/*****
+
  * 
  * (1) Lier les labels aux entrées dans le HTML en utilisant les attributs "for" et "id" dans le code existant. Corriger le code HTML quand nécessaire.
 (2) Utiliser du JavaScript pur (pas de jQuery) pour terminer le formulaire :
