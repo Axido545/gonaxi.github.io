@@ -116,17 +116,23 @@ if ( myL.length < 3 || myL  == "" ) {
   
     
     console.log(resultat);
-    console.log(eMail.value)
+
     
   
     
     }
   
   
+    console.log(eMail.value + " value")
+    console.log(eMail.innerText + " text"); 
   
   
-  
-  
+  let identif = ' blabla telegram ok'
+  let identifRegExp = new RegExp("telegram")
+
+  //console.log(/telegram/.test(identif));
+  console.log(identifRegExp.test(identif));
+
   
 
   
@@ -155,9 +161,15 @@ if ( myL.length < 3 || myL  == "" ) {
     Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
 
  * 
+ * Des messages d'erreur spécifiques doivent apparaître sous l'entrée qui n'est pas correcte. Les messages d'erreur doivent s'afficher sous le champ de saisie associé. Exemples :
+
+    "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    "Vous devez choisir une option."
+    "Vous devez vérifier que vous acceptez les termes et conditions."
+    "Vous devez entrer votre date de naissance."
+
  * 
- * 
- * 
+ * Après une validation réussie, inclure un message de confirmation de la soumission réussie pour l'utilisateur (ex. "Merci ! Votre réservation a été reçue.")
  */
 
  
