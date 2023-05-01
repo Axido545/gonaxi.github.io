@@ -108,7 +108,10 @@
                   type="date"
                   id="birthdate"
                   name="birthdate"
-                /><br>
+                />
+                <span class="validator-birthdate validator-custom">tt</span><br>
+
+                <br>
               </div>
               <div
                 class="formData">
@@ -200,7 +203,7 @@
                 />
                 <label class="checkbox2-label" for="accepte" required><!--Remplacement de <span class="checkbox-icon"></span> par linput ajout de l'id identique au fort-->
 
-                  <input  class="checkbox-icon" type="checkbox" name="accepte" id="accepte"> J'ai lu et accepté les conditions d'utilisation.
+                  <input  class="checkbox-icon" type="checkbox" name="accepte" id="accepte" checked> J'ai lu et accepté les conditions d'utilisation.
                 </label>
                 <br>
                 <label class="checkbox2-label" for="me-prevenir"><!--Remplacement de <span class="checkbox-icon"></span> par linput ajout de l'id identique au fort-->
@@ -217,7 +220,7 @@
                 value="C'est parti"
                 id="submit"
               />
-              <span class ="error"></span>
+              <span class ="validator-global">tt</span>
             </form>
           </div>
         </div>

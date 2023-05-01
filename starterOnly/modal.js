@@ -175,8 +175,11 @@ const validNumberOfTournement = function(nbOfTournementPosted){
 
 
 
-  if(isNaN(nbOfTournementPosted.value) == true )  {
-    validNumberOfTournementMsg.innerHTML = "Le nombre n'est pas valide";
+  if(
+    
+    nbOfTournementPosted.value == ""
+    || isNaN(nbOfTournementPosted.value) == true )  {
+    validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
     validNumberOfTournementMsg.style.color = 'red' ;
     console.log("nombre pas  valide")
 
@@ -197,7 +200,71 @@ const validNumberOfTournement = function(nbOfTournementPosted){
 
 };
 
+/////////////********vérif date de naissance.********************** ///////////////////////
 
+//const birthdateInfo = document.getElementById('#birthdate');
+
+
+const  birthDateposted =document.getElementById('birthdate');
+const validbirthDateMsg = document.querySelector(".validator-birthdate")
+
+
+const validBirthdate = function(){
+
+  if(birthDateposted.value == ""){
+
+    validbirthDateMsg.innerHTML= "Veuillez entrer votre date de naissance"
+    validbirthDateMsg.style.color ="red";
+    return false;
+  } else {
+  
+    return true;
+  }
+
+
+}
+
+
+
+
+
+/*
+
+let validBirthdateMsg = document.querySelector('.validator-birthdate');
+
+let verifBirthdate = function(){
+  validBirthdate(this);
+}
+
+// écouter modif de l'email
+form.email.addEventListener('change',verifBirthdate);
+
+
+
+
+const validBirthdate = function(birthdatePosted){
+
+console.log(birthdatePosted.date())
+
+  if(birthdatePosted.value == "") {
+
+    validBirthdateMsg.innerHTML = "Veuillez entrer votre date de naissance";
+    validEmailMsg.style.color = 'red' ;
+    return false;
+
+    alert('test B non')
+  } else {
+    alert('test B oui')
+
+
+    return true;
+    console.log("date de naissance valide")
+
+
+  }
+};
+
+*/
 
 
 /////////////********vérif si Un bouton radio est sélectionné.********************** ///////////////////////
@@ -206,28 +273,57 @@ const validNumberOfTournement = function(nbOfTournementPosted){
 
 
 
+const validRadioMsg = document.querySelector('.validator-radio');
 
 
-const radios = document.getElementsByName('location');
-const   validRadioMsg = document.querySelector('.validator-radio');
+const checkRadios = function(){
+  const radios = document.getElementsByName('location');
 
+
+
+  for(let radio of radios){
+
+    if(radio.value){
+   
+      return true;
+    }else {
+
+    
+      validRadioMsg.innerHTML = "Veuillez selectioner une ville";
+      validRadioMsg.style.color = 'red' ;
+
+      return false;
+      
+
+
+
+
+    }
+    
+    }
+
+
+}
+
+
+/*
 
 let selectedRadio = Array.from(radios).find(radio => radio.checked);
-
+console.log(selectedRadio.value);
 
 checkRadios = function(){
 
-if (selectedRadio.value == "") {
+if (selectedRadio.value) {
+  console.log("option ok")
+
+  return true;
+
+}else {
+
   validRadioMsg.innerHTML =  "Vous devez choisir une option."
   return false;
   console.log("option vide")
 
-
-}else {
-
-  return true;
-  console.log("option ok")
-
 }
 
 
@@ -237,15 +333,24 @@ if (selectedRadio.value == "") {
 }
 
 
+*/
 
 
 
 
 
-
-
+const validGlobalMsg = document.querySelector('.validator-global');
 
 //écouter soumission du formulaire
+
+
+
+document.forms["reserve"].submit();
+
+
+function MonSubmitForm() {
+  document.reserve.submit();
+} 
 
 form.addEventListener('submit',function(e){
   e.preventDefault();//empecher l'envoie au clique du formulaire
@@ -253,18 +358,31 @@ form.addEventListener('submit',function(e){
      validNom(form.last) &&
      validEmail(form.email) && 
      validNumberOfTournement(form.quantity) &&
-     checkRadios(form.location)){
+     checkRadios(form.location)&&
+     validBirthdate(form.birthDate)
+     
+     ){
 
-      console.log("ok c envoyé plié")
 
+      
+
+    document.reserve.submit();
+
+
+      console.log("ok tous les champs sont valide")
+      validGlobalMsg.innerHTML ="Merci ! Votre réservation a été reçue.";
+      validGlobalMsg.style.color ="green";
+
+form.submit();
 
      }else {
       console.log("veuillez remplir tous les champs du formulaire")
-console.log("prenom ok=" + validPrenom(form.first))
-console.log("nom ok =" +validNom(form.last))
-console.log("email ok =" + validEmail(form.email))
+ console.log("prenom ok=" + validPrenom(form.first))
+ console.log("nom ok =" +validNom(form.last))
+ console.log("email ok =" + validEmail(form.email))
 console.log("quantite ok =" + validNumberOfTournement(form.quantity))
-console.log("radio ok =" + checkRadios(form.location))
+ console.log("radio ok =" + checkRadios(form.location))
+ console.log("Birthday ok =" + validBirthdate(form.birthDate))
 
 
 
@@ -324,8 +442,8 @@ console.log("radio ok =" + checkRadios(form.location))
     CHECK (2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide. OK
     CHECK (3) L'adresse électronique est valide.
     CHECK (4) Pour le nombre de concours, une valeur numérique est saisie.
-    (5) Un bouton radio est sélectionné.
-    (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
+    CHECK (5) Un bouton radio est sélectionné.
+     CHECK (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
     Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
 
  * 
