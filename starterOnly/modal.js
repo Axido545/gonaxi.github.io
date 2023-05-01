@@ -28,9 +28,29 @@ let form = document.querySelector("#form-content");
 
 
 
+// launch modal event
+modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+
+// launch modal form
+function launchModal() {
+  modalbg.style.display = "block";
+}
 
 
-let validEmailMsg = document.querySelector('.validator-email');
+
+
+//pour fermer le bouton (x)
+/// je commence par créer une constante qui récupère l'élément
+const close = document.querySelector(".close");
+//close btn 
+close.addEventListener("click",closeModal);
+
+
+function closeModal(){
+  modalbg.style.display = "none";
+
+}
+
 
 
 
@@ -49,26 +69,26 @@ let validFirstMsg = document.querySelector('.validator-first');
 
 
 const validPrenom = function(prenomPosted) {
-  console.log(prenomPosted);
 
+// si la taille du prénom est inférieur à 2 alors c'est pas valide
+if( prenomPosted.value == "" || prenomPosted.value.length < 2) {
 
-
-// si la taille du prénom est inférieur à 3 alors c'est pas valide
-if(prenomPosted.value.length < 3) {
-
-  validFirstMsg.innerHTML = "Le prénom n'est pas valide ";
+  validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
     validFirstMsg.style.color = 'red';
+    return false;
+    console.log("prenom pas valide")
 
-} else {
-  validFirstMsg.innerHTML = "Le prénom est valide ";
-  validFirstMsg.style.color = 'green';
+} else  {
+  console.log("prenom  valide")
+
+  return true;
 }
 
 }
 
-/////////////********vérif du prénom********************** ///////////////////////
+/////////////********vérif du nom********************** ///////////////////////
 let verifNom = function() {
-  validNom(this)
+  validNom(this);
 }
 
 
@@ -80,19 +100,22 @@ let validLastMsg = document.querySelector('.validator-last');
 
 
 const validNom = function(nomPosted) {
-  console.log(nomPosted);
+  
+// si la taille du nom est inférieur à 2 alors c'est pas valide
+if( nomPosted.value == "" || nomPosted.value.length < 2) {
 
-
-
-// si la taille du nom est inférieur à 3 alors c'est pas valide
-if(nomPosted.value.length < 3) {
-
-  validLastMsg.innerHTML = "Le nom n'est pas valide ";
+  validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
     validLastMsg.style.color = 'red';
+    return false;
+    console.log("nom pas valide")
+
 
 } else {
-  validLastMsg.innerHTML = "Le nom est valide ";
-  validLastMsg.style.color = 'green';
+
+  return true;
+
+  console.log("nom  valide")
+
 }
 
 
@@ -100,6 +123,8 @@ if(nomPosted.value.length < 3) {
 }
 
 /////////////********vérif de l'email********************** ///////////////////////
+let validEmailMsg = document.querySelector('.validator-email');
+
 let verifMail = function(){
   validEmail(this);
 }
@@ -115,122 +140,164 @@ const validEmail = function(emailPosted){
   let emailRegExpControl = new RegExp('^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g')
 
   if(emailRegExpControl.test(emailPosted.value)) {
+    console.log("email  valide")
 
-    validEmailMsg.innerHTML = "L'adresse email est valide ";
-    validEmailMsg.style.color = 'green';
+    return true;
 
   } else {
 
-    validEmailMsg.innerHTML = "L'adresse email n'est pas valide";
+    validEmailMsg.innerHTML = "Veuillez entrer une adresse email valide";
     validEmailMsg.style.color = 'red' ;
+    return false;
+    console.log("email  pas alide")
+
 
   }
 };
 
 
+/////////////******** Pour le nombre de concours, une valeur numérique est saisie********************** ///////////////////////
 
 
+let validNumberOfTournementMsg = document.querySelector('.validator-number-of-tournement');
 
-//pour fermer le bouton (x) je commence par créer une constante qui récupère l'élément
-const close = document.querySelector(".close");
-
-
-// launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
-// launch modal form
-function launchModal() {
-  modalbg.style.display = "block";
+let verifNumbOfTournement = function(){
+  validNumberOfTournement(this);
 }
 
-
-//close btn X
-close.addEventListener("click",closeModal);
-
-
-function closeModal(){
-  modalbg.style.display = "none";
-
-}
-//console.log(formData)
-
-//validateForm
-//submit.addEventListener("click",validate);
+// écouter modif de l'email
+form.quantity.addEventListener('change',verifNumbOfTournement);
 
 
 
 
-/**************formulaire de validation**********
+const validNumberOfTournement = function(nbOfTournementPosted){
 
 
 
-function validate (result) {
-result.preventDefault();
+  if(isNaN(nbOfTournementPosted.value) == true )  {
+    validNumberOfTournementMsg.innerHTML = "Le nombre n'est pas valide";
+    validNumberOfTournementMsg.style.color = 'red' ;
+    console.log("nombre pas  valide")
 
-  let myF = firstName.value;
+    return false;
 
-  //Le champ Prénom a un minimum de 2 caractères / n'est pas vide.
-
-if ( myF.length < 3 || myF  == "" ) {
-
-    errorText.innerHTML ="la saisie est incorrect"
 
 
   } else {
 
-    errorText.innerHTML ="c'est bon pour le first name"
 
+    console.log("nombre  valide")
+
+    return true;
+
+  
   }
 
-  
-  //Le champ Nom de famille a un minimum de 2 caractères / n'est pas vide.
 
-  let myL = lastName.value;
+};
 
 
-if ( myL.length < 3 || myL  == "" ) {
-
-    errorText.innerHTML ="la saisie est incorrect"
 
 
-  } else {
+/////////////********vérif si Un bouton radio est sélectionné.********************** ///////////////////////
 
-    errorText.innerHTML ="c'est bon pour le laste name"
 
-  }
 
-  // vérif L'adresse électronique est valide.
 
+
+
+
+const radios = document.getElementsByName('location');
+const   validRadioMsg = document.querySelector('.validator-radio');
+
+
+let selectedRadio = Array.from(radios).find(radio => radio.checked);
+
+
+checkRadios = function(){
+
+if (selectedRadio.value == "") {
+  validRadioMsg.innerHTML =  "Vous devez choisir une option."
+  return false;
+  console.log("option vide")
+
+
+}else {
+
+  return true;
+  console.log("option ok")
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+//écouter soumission du formulaire
+
+form.addEventListener('submit',function(e){
+  e.preventDefault();//empecher l'envoie au clique du formulaire
+  if(validPrenom(form.first) &&
+     validNom(form.last) &&
+     validEmail(form.email) && 
+     validNumberOfTournement(form.quantity) &&
+     checkRadios(form.location)){
+
+      console.log("ok c envoyé plié")
+
+
+     }else {
+      console.log("veuillez remplir tous les champs du formulaire")
+console.log("prenom ok=" + validPrenom(form.first))
+console.log("nom ok =" +validNom(form.last))
+console.log("email ok =" + validEmail(form.email))
+console.log("quantite ok =" + validNumberOfTournement(form.quantity))
+console.log("radio ok =" + checkRadios(form.location))
+
+
+
+     }
+     
+
+     
     
-    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    let resultat = mailformat.test(eMail.value)
-
-
-    if (!resultat) {
-      errorText.innerHTML = "Veuillez entrer une adresse email valide";
-      return false;
-    }
   
-    if (resultat) {
-      errorText.innerHTML = ""
-      return true;
-    }
 
+     
 
-    
-  
-    
-    console.log(resultat);
-
-    
-  
-    
-    }
   
   
-    console.log(eMail.value + " value")
-    console.log(eMail.innerText + " text"); 
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
   
   
 
@@ -243,7 +310,7 @@ if ( myL.length < 3 || myL  == "" ) {
 
 
 
- * 
+ /* 
  * (1) Lier les labels aux entrées dans le HTML en utilisant les attributs "for" et "id" dans le code existant. Corriger le code HTML quand nécessaire.
 (2) Utiliser du JavaScript pur (pas de jQuery) pour terminer le formulaire :
 
@@ -253,10 +320,10 @@ if ( myL.length < 3 || myL  == "" ) {
 
 
     Les données doivent être saisies correctement :
-    (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide. OK
-    (2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide.
-    (3) L'adresse électronique est valide.
-    (4) Pour le nombre de concours, une valeur numérique est saisie.
+     CHECK (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide. OK
+    CHECK (2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide. OK
+    CHECK (3) L'adresse électronique est valide.
+    CHECK (4) Pour le nombre de concours, une valeur numérique est saisie.
     (5) Un bouton radio est sélectionné.
     (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
     Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
