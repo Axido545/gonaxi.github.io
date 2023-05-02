@@ -22,11 +22,24 @@ const numberOfTournement = document.getElementById("quantity")
 const townOfTournement = document.querySelectorAll('input[name="location"]');
 const termsOfUse = document.getElementById("checkbox1");
 const errorText = document.querySelector(".error")
-let form = document.querySelector("#form-content");
+const form = document.querySelector("#form-content");
+const radios = document.getElementsByName('location');
+const  birthDateposted = document.getElementById('birthdate');
+//integration d'element de validation
+const validFirstMsg = document.querySelector('.validator-first');
+const validLastMsg = document.querySelector('.validator-last');
+const validEmailMsg = document.querySelector('.validator-email');
+const validbirthDateMsg = document.querySelector(".validator-birthdate");
+const validNumberOfTournementMsg = document.querySelector('.validator-number-of-tournement');
+const validRadioMsg = document.querySelector('.validator-radio');
+const validGlobalMsg = document.querySelector('.validator-global');
+//regExp
+let prenomRegExpControl = new RegExp("^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$", "gi")
+let nomRegExpControl = new RegExp("^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$", "gi")
+let emailRegExpControl = new RegExp('^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g')
 
 
-
-
+//écouter les éléments 
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -36,94 +49,50 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-
-
-
 //pour fermer le bouton (x)
 /// je commence par créer une constante qui récupère l'élément
 const close = document.querySelector(".close");
 //close btn 
 close.addEventListener("click",closeModal);
 
-
 function closeModal(){
   modalbg.style.display = "none";
-
 }
-
-
-
-
 
 /////////////********vérif du prénom********************** ///////////////////////
 let verifPrenom = function() {
   validPrenom(this)
 }
 
-
 //écouter modif du prénom
 form.first.addEventListener('change', verifPrenom);
 
-//récupération de l'élément pour poster le message
-let validFirstMsg = document.querySelector('.validator-first');
-
-
-const validPrenom = function(prenomPosted) {
-
-// si la taille du prénom est inférieur à 2 alors c'est pas valide
-if( prenomPosted.value == "" || prenomPosted.value.length < 2) {
-
-  validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
-    validFirstMsg.style.color = 'red';
+const validPrenom = function(prenomPosted){
+  if(prenomRegExpControl.test(prenomPosted.value)) {validFirstMsg.innerHTML = "";
+    return true;
+  } else {validFirstMsg.innerHTML = "Veuillez entrer une prénom valide" ;
     return false;
-    console.log("prenom pas valide")
-
-} else  {
-  console.log("prenom  valide")
-
-  return true;
-}
-
-}
+  }
+};
 
 /////////////********vérif du nom********************** ///////////////////////
-let verifNom = function() {
+
+let verifNom = function(){
   validNom(this);
 }
 
+// écouter modif du nom
+form.last.addEventListener('change',verifNom);
 
-//écouter modif du nom
-form.last.addEventListener('change', verifNom);
-
-//récupération de l'élément pour poster le message
-let validLastMsg = document.querySelector('.validator-last');
-
-
-const validNom = function(nomPosted) {
-  
-// si la taille du nom est inférieur à 2 alors c'est pas valide
-if( nomPosted.value == "" || nomPosted.value.length < 2) {
-
-  validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-    validLastMsg.style.color = 'red';
+const validNom = function(nomPosted){
+  if(nomRegExpControl.test(nomPosted.value)) {validLastMsg.innerHTML = "";
+    return true;
+  } else { validLastMsg.innerHTML = "Veuillez entrer une nom valide" ;
     return false;
-    console.log("nom pas valide")
-
-
-} else {
-
-  return true;
-
-  console.log("nom  valide")
-
-}
-
-
-
-}
+  }
+};
 
 /////////////********vérif de l'email********************** ///////////////////////
-let validEmailMsg = document.querySelector('.validator-email');
 
 let verifMail = function(){
   validEmail(this);
@@ -132,34 +101,15 @@ let verifMail = function(){
 // écouter modif de l'email
 form.email.addEventListener('change',verifMail);
 
-
-
-
 const validEmail = function(emailPosted){
-  //création de la reg exp (expression régulière) pour validation email
-  let emailRegExpControl = new RegExp('^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g')
-
-  if(emailRegExpControl.test(emailPosted.value)) {
-    console.log("email  valide")
-
+  if(emailRegExpControl.test(emailPosted.value)) { validEmailMsg.innerHTML = "";
     return true;
-
-  } else {
-
-    validEmailMsg.innerHTML = "Veuillez entrer une adresse email valide";
-    validEmailMsg.style.color = 'red' ;
+  } else { validEmailMsg.innerHTML = "Veuillez entrer une adresse email valide";
     return false;
-    console.log("email  pas alide")
-
-
   }
 };
 
-
 /////////////******** Pour le nombre de concours, une valeur numérique est saisie********************** ///////////////////////
-
-
-let validNumberOfTournementMsg = document.querySelector('.validator-number-of-tournement');
 
 let verifNumbOfTournement = function(){
   validNumberOfTournement(this);
@@ -168,185 +118,42 @@ let verifNumbOfTournement = function(){
 // écouter modif de l'email
 form.quantity.addEventListener('change',verifNumbOfTournement);
 
-
-
-
 const validNumberOfTournement = function(nbOfTournementPosted){
-
-
-
-  if(
-    
-    nbOfTournementPosted.value == ""
+  if(nbOfTournementPosted.value == ""
     || isNaN(nbOfTournementPosted.value) == true )  {
     validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
-    validNumberOfTournementMsg.style.color = 'red' ;
-    console.log("nombre pas  valide")
-
     return false;
-
-
-
   } else {
-
-
-    console.log("nombre  valide")
-
+    validNumberOfTournementMsg.innerHTML = "";
     return true;
-
-  
   }
-
-
 };
 
 /////////////********vérif date de naissance.********************** ///////////////////////
 
-//const birthdateInfo = document.getElementById('#birthdate');
-
-
-const  birthDateposted =document.getElementById('birthdate');
-const validbirthDateMsg = document.querySelector(".validator-birthdate")
-
-
 const validBirthdate = function(){
-
   if(birthDateposted.value == ""){
-
-    validbirthDateMsg.innerHTML= "Veuillez entrer votre date de naissance"
-    validbirthDateMsg.style.color ="red";
+    validbirthDateMsg.innerHTML= "Vous devez entrer votre date de naissance";
     return false;
   } else {
-  
+    validbirthDateMsg.innerHTML= "";
     return true;
   }
-
-
 }
-
-
-
-
-
-/*
-
-let validBirthdateMsg = document.querySelector('.validator-birthdate');
-
-let verifBirthdate = function(){
-  validBirthdate(this);
-}
-
-// écouter modif de l'email
-form.email.addEventListener('change',verifBirthdate);
-
-
-
-
-const validBirthdate = function(birthdatePosted){
-
-console.log(birthdatePosted.date())
-
-  if(birthdatePosted.value == "") {
-
-    validBirthdateMsg.innerHTML = "Veuillez entrer votre date de naissance";
-    validEmailMsg.style.color = 'red' ;
-    return false;
-
-    alert('test B non')
-  } else {
-    alert('test B oui')
-
-
-    return true;
-    console.log("date de naissance valide")
-
-
-  }
-};
-
-*/
-
 
 /////////////********vérif si Un bouton radio est sélectionné.********************** ///////////////////////
 
-
-
-
-
-const validRadioMsg = document.querySelector('.validator-radio');
-
-
 const checkRadios = function(){
-  const radios = document.getElementsByName('location');
-
-
-
   for(let radio of radios){
-
-    if(radio.value){
-   
+    if(radio.checked){
+      validRadioMsg.innerHTML = "";
       return true;
     }else {
-
-    
       validRadioMsg.innerHTML = "Veuillez selectioner une ville";
-      validRadioMsg.style.color = 'red' ;
-
       return false;
-      
-
-
-
-
     }
-    
     }
-
-
 }
-
-
-/*
-
-let selectedRadio = Array.from(radios).find(radio => radio.checked);
-console.log(selectedRadio.value);
-
-checkRadios = function(){
-
-if (selectedRadio.value) {
-  console.log("option ok")
-
-  return true;
-
-}else {
-
-  validRadioMsg.innerHTML =  "Vous devez choisir une option."
-  return false;
-  console.log("option vide")
-
-}
-
-
-
-
-
-}
-
-
-*/
-
-
-
-
-
-const validGlobalMsg = document.querySelector('.validator-global');
-
-//écouter soumission du formulaire
-
-
-
-document.forms["reserve"].submit();
-
 
 function MonSubmitForm() {
   document.reserve.submit();
@@ -354,49 +161,19 @@ function MonSubmitForm() {
 
 form.addEventListener('submit',function(e){
   e.preventDefault();//empecher l'envoie au clique du formulaire
-  if(validPrenom(form.first) &&
-     validNom(form.last) &&
-     validEmail(form.email) && 
-     validNumberOfTournement(form.quantity) &&
-     checkRadios(form.location)&&
-     validBirthdate(form.birthDate)
-     
+  if(validPrenom(form.first) 
+     || validNom(form.last)
+     || validEmail(form.email)
+     ||validNumberOfTournement(form.quantity)
+     ||checkRadios(form.location)
+     ||validBirthdate(form.birthDate)
      ){
-
-
-      
-
-    document.reserve.submit();
-
-
-      console.log("ok tous les champs sont valide")
       validGlobalMsg.innerHTML ="Merci ! Votre réservation a été reçue.";
-      validGlobalMsg.style.color ="green";
 
 form.submit();
-
      }else {
-      console.log("veuillez remplir tous les champs du formulaire")
- console.log("prenom ok=" + validPrenom(form.first))
- console.log("nom ok =" +validNom(form.last))
- console.log("email ok =" + validEmail(form.email))
-console.log("quantite ok =" + validNumberOfTournement(form.quantity))
- console.log("radio ok =" + checkRadios(form.location))
- console.log("Birthday ok =" + validBirthdate(form.birthDate))
-
-
-
+      validGlobalMsg.innerHTML =" Veuillez compléter les champs vide";
      }
-     
-
-     
-    
-  
-
-     
-
-  
-  
   });
 
 
@@ -438,21 +215,21 @@ console.log("quantite ok =" + validNumberOfTournement(form.quantity))
 
 
     Les données doivent être saisies correctement :
-     CHECK (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide. OK
+    CHECK (1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide. OK
     CHECK (2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide. OK
     CHECK (3) L'adresse électronique est valide.
     CHECK (4) Pour le nombre de concours, une valeur numérique est saisie.
     CHECK (5) Un bouton radio est sélectionné.
-     CHECK (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
-    Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
+    CHECK (6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
+    TODO Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
 
  * 
  * Des messages d'erreur spécifiques doivent apparaître sous l'entrée qui n'est pas correcte. Les messages d'erreur doivent s'afficher sous le champ de saisie associé. Exemples :
 
-    "Veuillez entrer 2 caractères ou plus pour le champ du nom."
-    "Vous devez choisir une option."
-    "Vous devez vérifier que vous acceptez les termes et conditions."
-    "Vous devez entrer votre date de naissance."
+     CHECK "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+     CHECK "Vous devez choisir une option."
+    TODO "Vous devez vérifier que vous acceptez les termes et conditions."
+     CHECK "Vous devez entrer votre date de naissance."
 
  * 
  * Après une validation réussie, inclure un message de confirmation de la soumission réussie pour l'utilisateur (ex. "Merci ! Votre réservation a été reçue.")
