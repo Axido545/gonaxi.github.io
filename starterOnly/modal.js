@@ -36,7 +36,7 @@ const validGlobalMsg = document.querySelector('.validator-global');
 //regExp
 let prenomRegExpControl = new RegExp("^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$", "gi")
 let nomRegExpControl = new RegExp("^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$", "gi")
-let emailRegExpControl = new RegExp('^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$', 'g')
+let emailRegExpControl = new RegExp('^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$', 'g')
 
 
 //écouter les éléments 
@@ -161,6 +161,10 @@ function MonSubmitForm() {
 
 form.addEventListener('submit',function(e){
   e.preventDefault();//empecher l'envoie au clique du formulaire
+
+
+
+  /*
   if(validPrenom(form.first) 
      || validNom(form.last)
      || validEmail(form.email)
@@ -170,10 +174,10 @@ form.addEventListener('submit',function(e){
      ){
       validGlobalMsg.innerHTML ="Merci ! Votre réservation a été reçue.";
 
-form.submit();
+//form.submit();
      }else {
       validGlobalMsg.innerHTML =" Veuillez compléter les champs vide";
-     }
+     }*/
   });
 
 
