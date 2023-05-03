@@ -462,7 +462,7 @@ input[data-error]::after {
 }
 .hero-img img {
   width: 100%;
-  min-height: 760px;
+  min-height: 880px;
   display: block;
   padding: 0;
 }
