@@ -368,9 +368,13 @@ document.addEventListener(
   
   'DOMContentLoaded', function() {
   const myForm = document.forms.namedItem("reserve");
+  const modal = document.querySelector('.modal');
+
 
   myForm.addEventListener('submit', function(event) {
     event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+    let valeur = false;
   
     if (validbirthDate()
       || validTournement()
@@ -379,7 +383,12 @@ document.addEventListener(
       || checkEmail()
       || checkNom()
       || checkPrenom()
-    ) {
+
+
+    ) { 
+
+      valeur = true;
+
       const xhr = new XMLHttpRequest();
       xhr.open(myForm.method, myForm.action);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -389,16 +398,57 @@ document.addEventListener(
         }
       };
       xhr.send(new FormData(myForm));
-      modalbg.style.display = "none";
 
       
     }
-    alert('Votre formulaire a bien été enregistré')
+   // alert('Votre formulaire a bien été enregistré')
+ 
+
+
+
+    if (valeur ){
+      modalbg.style.display = "none";
+      modal.style.display = 'block';
+
+    }else {
+      modal.style.display = 'none';
+
+    }
+
 
   });
 
 
 })
+
+
+function newModal () {
+
+
+}
+
+
+
+// const form = document.querySelector('form');
+// const modal = document.querySelector('.modal');
+// const closeBtn = document.querySelector('.close-btn');
+
+// form.addEventListener('submit', function(event) {
+//   // Empêche l'envoi du formulaire par défaut
+//   event.preventDefault(); 
+  
+//   // Vérifiez que le formulaire est valide avant d'afficher la modale
+//   if (form.checkValidity()) {
+//     // Affiche la modale en modifiant le style CSS
+//     modal.style.display = 'block';
+//   }
+// });
+
+// closeBtn.addEventListener('click', function() {
+//   // Masque la modale en modifiant le style CSS
+//   modal.style.display = 'none';
+// });
+
 
 // const birthdateInput = document.getElementById('birthdate');
 
