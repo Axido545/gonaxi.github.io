@@ -371,6 +371,8 @@ document.addEventListener(
   const modal = document.querySelector('.modal');
 
 
+
+
   myForm.addEventListener('submit', function(event) {
     event.preventDefault(); // Empêche l'envoi du formulaire par défaut
 
@@ -401,19 +403,10 @@ document.addEventListener(
 
       
     }
-   // alert('Votre formulaire a bien été enregistré')
- 
+    alert('Votre formulaire a bien été enregistré')
+    
 
-
-
-    if (valeur ){
-      modalbg.style.display = "none";
-      modal.style.display = 'block';
-
-    }else {
-      modal.style.display = 'none';
-
-    }
+   
 
 
   });
@@ -422,10 +415,7 @@ document.addEventListener(
 })
 
 
-function newModal () {
 
-
-}
 
 
 
