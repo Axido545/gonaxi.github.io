@@ -14,157 +14,495 @@ const formData = document.querySelectorAll(".formData");
 // J'ajoute le bouton validier du formulaire 
 const submit = document.getElementById("submit");
 //l'ajout des éléments du formulaire
-const firstName = document.getElementById("first");
-const lastName = document.getElementById("last");
-const eMail = document.getElementById("email");
-const birthDate = document.getElementById("birthdate");
-const numberOfTournement = document.getElementById("quantity")
-const townOfTournement = document.querySelectorAll('input[name="location"]');
-const termsOfUse = document.getElementById("checkbox1");
-const errorText = document.querySelector(".error")
 const form = document.querySelector("#form-content");
-const radios = document.getElementsByName('location');
-const  birthDateposted = document.getElementById('birthdate');
+
 //integration d'element de validation
 const validFirstMsg = document.querySelector('.validator-first');
 const validLastMsg = document.querySelector('.validator-last');
 const validEmailMsg = document.querySelector('.validator-email');
-const validbirthDateMsg = document.querySelector(".validator-birthdate");
 const validNumberOfTournementMsg = document.querySelector('.validator-number-of-tournement');
-const validRadioMsg = document.querySelector('.validator-radio');
-const validGlobalMsg = document.querySelector('.validator-global');
+
+const validbirthDateMsg = document.querySelector(".validator-birthdate");
+ const validRadioMsg = document.querySelector('.validator-radio');
+// const validGlobalMsg = document.querySelector('.validator-global');
+ const validConditionsMsg = document.querySelector('.validator-conditions');
+
 //regExp
-let prenomRegExpControl = new RegExp("^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$", "gi")
-let nomRegExpControl = new RegExp("^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$", "gi")
-let emailRegExpControl = new RegExp('^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$', 'g')
+const regexFirstLast = new RegExp('^[\\p{L}-]{2,}$', 'iu');
+const regexEmail = new RegExp("^[a-z0-9!#$%&’*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&’*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$", "i");
 
 
-//écouter les éléments 
+//récup pour fermer bouton
+const close = document.querySelector(".close");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
-function launchModal() {
-  modalbg.style.display = "block";
-}
+function launchModal() { modalbg.style.display = "block";}
 
 //pour fermer le bouton (x)
 /// je commence par créer une constante qui récupère l'élément
-const close = document.querySelector(".close");
+
 //close btn 
 close.addEventListener("click",closeModal);
 
-function closeModal(){
-  modalbg.style.display = "none";
-}
+function closeModal(){modalbg.style.display = "none";}
 
-/////////////********vérif du prénom********************** ///////////////////////
-let verifPrenom = function() {
-  validPrenom(this)
-}
+// je recommance
 
-//écouter modif du prénom
-form.first.addEventListener('change', verifPrenom);
 
-const validPrenom = function(prenomPosted){
-  if(prenomRegExpControl.test(prenomPosted.value)) {validFirstMsg.innerHTML = "";
-    return true;
-  } else {validFirstMsg.innerHTML = "Veuillez entrer une prénom valide" ;
-    return false;
-  }
-};
+const locationRadios = document.querySelectorAll('input[name="location"]');
 
-/////////////********vérif du nom********************** ///////////////////////
 
-let verifNom = function(){
-  validNom(this);
-}
+//////////////////
 
-// écouter modif du nom
-form.last.addEventListener('change',verifNom);
+// let verifPrenom = function() { validPrenom(this)}
+// let verifNumbOfTournement = function(){validNumberOfTournement(this);}
+// let verifdBirthdate = function(){ validBirthdate(this);}
+// let verifcheckRadios = function(){validcheckRadios(this);}
+// let verifConditions = function(){ validConditions(this);}
 
-const validNom = function(nomPosted){
-  if(nomRegExpControl.test(nomPosted.value)) {validLastMsg.innerHTML = "";
-    return true;
-  } else { validLastMsg.innerHTML = "Veuillez entrer une nom valide" ;
-    return false;
-  }
-};
+//écouter les éléments
+// form.quantity.addEventListener('change',verifNumbOfTournement);
+// form.birthdate.addEventListener('change',verifdBirthdate);
+// form.accepte.addEventListener('change',verifConditions);
 
-/////////////********vérif de l'email********************** ///////////////////////
 
-let verifMail = function(){
+// ******************** Ecoute des modification) ********************************
+
+
+//écouter la modification du prénom
+form.first.addEventListener('change', function(){
+  validFirst(this);
+});
+
+//écouter la modification du nom
+form.last.addEventListener('change', function(){
+  validLast(this);
+});
+
+//écouter la modification de l'email
+form.email.addEventListener('change', function(){
   validEmail(this);
+});
+
+//écouter la modification du tournoi
+ form.quantity.addEventListener('change', function(){
+  validTournement(this);
+ });
+
+//vérifier le champ date de naissance
+form.birthdate.addEventListener('change', function() {
+  validbirthDate(this);
+});
+
+//vérifier le champ Radio ( ville)
+//locationRadios.addEventListener('change', function() {
+  //validRadios(this);
+ // });
+  
+
+//vérifier le champ condition
+
+
+// ******************** Validation du Prénom (First) ********************************
+
+const validFirst = function (inputFirst){
+
+if (inputFirst.value =="") {
+
+  validFirstMsg.innerHTML = "Veuillez entrer un prénom"
+
+} else if (inputFirst.value.length < 2){
+
+  validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+
+}else if (regexFirstLast.test(inputFirst.value)){
+
+  validFirstMsg.innerHTML = ""
+
+}else {
+
+  validFirstMsg.innerHTML = "Veuillez entrer un prénom valide"
 }
 
-// écouter modif de l'email
-form.email.addEventListener('change',verifMail);
+}
 
-const validEmail = function(emailPosted){
-  if(emailRegExpControl.test(emailPosted.value)) { validEmailMsg.innerHTML = "";
-    return true;
-  } else { validEmailMsg.innerHTML = "Veuillez entrer une adresse email valide";
-    return false;
+// ******************** Validation du Nom (Last) ********************************
+
+const validLast = function (inputLast){
+
+  if (inputLast.value == "") {
+
+    validLastMsg.innerHTML = "Veuillez entrer un nom"
+
   }
-};
+  
+  else if (inputLast.value.length < 2){
 
-/////////////******** Pour le nombre de concours, une valeur numérique est saisie********************** ///////////////////////
+    validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom."
 
-let verifNumbOfTournement = function(){
-  validNumberOfTournement(this);
+  }else if (regexFirstLast.test(inputLast.value)){
+
+    validLastMsg.innerHTML = ""
+
+  }else {
+    
+    validLastMsg.innerHTML = "Veuillez entrer un nom valide"
+  }
+
 }
 
-// écouter modif de l'email
-form.quantity.addEventListener('change',verifNumbOfTournement);
+// ******************** Validation de l'e-mail (email) ********************************
 
-const validNumberOfTournement = function(nbOfTournementPosted){
-  if(nbOfTournementPosted.value == ""
-    || isNaN(nbOfTournementPosted.value) == true )  {
-    validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
-    return false;
+const validEmail = function (inputEmail){
+
+  if(inputEmail == ""){
+
+    validEmailMsg.innerHTML = "Veuillez entrer un e-mail";
+
+  } else if (regexEmail.test(inputEmail.value)){
+
+    validEmailMsg.innerHTML = "";
+
+  }else {
+    validEmailMsg.innerHTML = "Veuillez entrer un e-mail valide";
+  }
+
+}
+
+// ******************** Validation pour le nombre de concours, une valeur numérique est saisie. ********************************
+
+ const validNumberOfTournement = function(nbOfTournementPosted){
+
+ if(nbOfTournementPosted.value == ""){
+
+  validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+
+ } else if ( isNaN(nbOfTournementPosted.value) == true){
+
+  validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+
   } else {
+
     validNumberOfTournementMsg.innerHTML = "";
-    return true;
+
   }
 };
 
-/////////////********vérif date de naissance.********************** ///////////////////////
 
-const validBirthdate = function(){
-  if(birthDateposted.value == ""){
-    validbirthDateMsg.innerHTML= "Vous devez entrer votre date de naissance";
+//une fois qu'on clique sur submit on voit >>>>>>>>
+
+const submitBtn = document.getElementById("submit"); 
+
+
+
+// ******************** Validation de la date de naissance apres clic ********************************
+
+
+
+
+function validbirthDate() {
+
+  if (form.birthdate.value === '') {
+    validbirthDateMsg.innerHTML = "Vous devez entrer votre date de naissance";
     return false;
+  }
+  validbirthDateMsg.innerHTML = "";
+  return true;
+
+}
+
+
+// ******************** Validation pour le nombre de concours, après clic. ********************************
+
+
+ function validTournement() {
+
+   if (form.quantity.value === '') {
+    validNumberOfTournementMsg.innerHTML = "Vous devez un nombre de tournoi";
+ return false;
+   }else if ( isNaN(form.quantity.value) == true){
+
+    validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+
+    return false;
+  
+    } else {
+  
+      validNumberOfTournementMsg.innerHTML = "";
+
+      return true;
+  
+    }
+ }
+
+// ******************** Validation si un bouton radio est selectionné  apres clic********************************
+
+
+// const validcheckRadios = function(){
+//   for(let radio of radios){
+//     if(radio.checked){validRadioMsg.innerHTML = "";
+//       return true;
+//     }else {validRadioMsg.innerHTML = "Veuillez accepter les conditions ";
+//       return false;
+//     }
+//     }
+// }
+
+
+function checklocation() {
+  const locationRadios = document.querySelectorAll('input[name="location"]');
+  let isLocationSelected = false;
+
+  for (let i = 0; i < locationRadios.length; i++) {
+    if (locationRadios[i].checked) {
+      isLocationSelected = true;
+      break;
+    }
+  }
+
+  if (isLocationSelected) {
+    validRadioMsg.innerHTML = "";
+
   } else {
-    validbirthDateMsg.innerHTML= "";
-    return true;
+    validRadioMsg.innerHTML = "Veuillez selectionner une ville ";
   }
 }
 
-/////////////********vérif si Un bouton radio est sélectionné.********************** ///////////////////////
+// ******************** Validation la condition est selectionné  apres clic********************************
 
-const checkRadios = function(){
-  for(let radio of radios){
-    if(radio.checked){
-      validRadioMsg.innerHTML = "";
-      return true;
-    }else {
-      validRadioMsg.innerHTML = "Veuillez selectioner une ville";
+function checkConditions() {
+
+  if(form.accepte.checked == false){validConditionsMsg.innerHTML = "Veuillez accepter les conditions";
       return false;
+    }else {validConditionsMsg.innerHTML = "";
+      return true;
     }
     }
+
+
+
+// ******************** Validation de l email ********************************
+function checkEmail() {
+  if(form.email == ""){
+
+    
+    validEmailMsg.innerHTML = "Veuillez entrer un e-mail";
+    return false;
+
+  } else if (regexEmail.test(form.email.value)){
+
+    validEmailMsg.innerHTML = "";
+     return true;
+
+  }else {
+    validEmailMsg.innerHTML = "Veuillez entrer un e-mail valide";
+    return false;
+  }
+    }
+
+// ******************** Validation du nom ********************************
+
+function checkNom() {
+  if (form.last.value == "") {
+
+    validLastMsg.innerHTML = "Veuillez entrer un nom"
+    return false;
+
+  }
+  
+  else if (form.last.value.length < 2){
+
+    validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    return false;
+
+  }else if (regexFirstLast.test(form.last.value)){
+
+    validLastMsg.innerHTML = ""
+
+    return true;
+
+  }else {
+    
+    validLastMsg.innerHTML = "Veuillez entrer un nom valide"
+    return false;
+
+  }
+    }
+
+    
+// ******************** Validation du prenom ********************************
+
+function checkPrenom() {
+
+  if (form.first.value =="") {
+
+    validFirstMsg.innerHTML = "Veuillez entrer un prénom"
+    return false;
+  
+  } else if (form.first.value.length < 2){
+  
+    validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+    return false;
+  
+  }else if (regexFirstLast.test(form.first.value)){
+  
+    validFirstMsg.innerHTML = ""
+    return true;
+  
+  }else {
+  
+    validFirstMsg.innerHTML = "Veuillez entrer un prénom valide"
+    return false;
+  }
+
+
 }
 
-function MonSubmitForm() {
-  document.reserve.submit();
-} 
 
+
+console.log(form)
+document.addEventListener(
+  
+  'DOMContentLoaded', function() {
+  const myForm = document.forms.namedItem("reserve");
+
+  myForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+  
+    if (validbirthDate()
+      || validTournement()
+      || checklocation()
+      || checkConditions()
+      || checkEmail()
+      || checkNom()
+      || checkPrenom()
+    ) {
+      const xhr = new XMLHttpRequest();
+      xhr.open(myForm.method, myForm.action);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          console.log(xhr.responseText);
+        }
+      };
+      xhr.send(new FormData(myForm));
+      modalbg.style.display = "none";
+
+      
+    }
+    alert('Votre formulaire a bien été enregistré')
+
+  });
+
+
+})
+
+// const birthdateInput = document.getElementById('birthdate');
+
+// birthdateInput.addEventListener('change', function() {
+//   const birthdate = new Date(birthdateInput.value);
+//   const now = new Date();
+//   const age = now.getFullYear() - birthdate.getFullYear();
+//   const monthDiff = now.getMonth() - birthdate.getMonth();
+
+//   // Vérifiez si l'âge est inférieur à 18 ans
+//   if (age < 18 || (age === 18 && monthDiff < 0)) {
+//     alert("Vous devez avoir au moins 18 ans pour continuer.");
+//     birthdateInput.value = ""; // Effacer la date pour obliger la saisie d'une nouvelle date
+//   }
+// });
+
+// const validBirthdate = function(){
+//   if(birthDate.value == ""){validbirthDateMsg.innerHTML= "Vous devez entrer votre date de naissance";
+//     return false;
+//   } else {validbirthDateMsg.innerHTML= "";
+//     return true;
+//   }
+// };
+
+
+
+// const dateInput = document.getElementById("dateInput");
+// const submitBtn = document.getElementById("submitBtn");
+
+// submitBtn.addEventListener("click", function() {
+//   if (dateInput.value === "") {
+//     console.log("Le champ date n'est pas rempli.");
+//   } else {
+//     console.log("Le champ date est rempli avec la valeur : " + dateInput.value);
+//   }
+// });
+
+///////////////////////**************VERIF EMAIL**************///////////////////////
+
+
+// let verifMail = function(){validEmail(this);}
+
+// form.email.addEventListener('change',verifMail);
+
+// const validEmail = function(emailPosted){
+
+//   let valeur = emailRegExpControl.test(emailPosted.value);
+
+//   console.log(valeur);
+//    if (!valeur) {
+
+
+//     validEmailMsg.innerHTML = "Veuillez entrer une adresse email valide";
+//    return true;
+
+//    } 
+   
+//    if (valeur) {
+
+//     validEmailMsg.innerHTML = "" ;
+
+//     //return false;
+//    }
+ 
+// };
+
+// ///////////////////////
+// const validNumberOfTournement = function(nbOfTournementPosted){
+//   if(nbOfTournementPosted.value == "" || isNaN(nbOfTournementPosted.value) == true ){validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+//     return false;
+//   } else {validNumberOfTournementMsg.innerHTML = "";
+//     return true;
+//   }
+// };
+
+
+
+// const validcheckRadios = function(){
+//   for(let radio of radios){
+//     if(radio.checked){validRadioMsg.innerHTML = "";
+//       return true;
+//     }else {validRadioMsg.innerHTML = "Veuillez accepter les conditions ";
+//       return false;
+//     }
+//     }
+// }
+
+// const validConditions = function(){
+//     if(conditions.checked == false){validConditionsMsg.innerHTML = "Veuillez selectioner une ville";
+//       return true;
+//     }else {validConditionsMsg.innerHTML = "";
+//       return false;
+//     }
+//     }
+
+
+
+/*
 form.addEventListener('submit',function(e){
   e.preventDefault();//empecher l'envoie au clique du formulaire
+  valeur = true;
 
 
-
-  /*
+  
   if(validPrenom(form.first) 
      || validNom(form.last)
      || validEmail(form.email)
@@ -174,35 +512,11 @@ form.addEventListener('submit',function(e){
      ){
       validGlobalMsg.innerHTML ="Merci ! Votre réservation a été reçue.";
 
-//form.submit();
+form.submit();
      }else {
       validGlobalMsg.innerHTML =" Veuillez compléter les champs vide";
-     }*/
+     }
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
- 
-  
-  
-
-  
-
-  
 
 
 
@@ -232,10 +546,9 @@ form.addEventListener('submit',function(e){
 
      CHECK "Veuillez entrer 2 caractères ou plus pour le champ du nom."
      CHECK "Vous devez choisir une option."
-    TODO "Vous devez vérifier que vous acceptez les termes et conditions."
+    CHECK "Vous devez vérifier que vous acceptez les termes et conditions."
      CHECK "Vous devez entrer votre date de naissance."
 
  * 
  * Après une validation réussie, inclure un message de confirmation de la soumission réussie pour l'utilisateur (ex. "Merci ! Votre réservation a été reçue.")
  */
-
