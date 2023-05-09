@@ -86,6 +86,10 @@ form.birthdate.addEventListener('change', function() {
   validbirthDate(this);
 });
 
+//vérifier le champ de  la ville
+form.birthdate.addEventListener('change', function() {
+  verifLocation(this);
+});
 
 
 
@@ -175,10 +179,6 @@ const validEmail = function (inputEmail){
 };
 
 
-//une fois qu'on clique sur submit on voit >>>>>>>>
-
-const submitBtn = document.getElementById("submit"); 
-
 
 
 // ******************** Validation de la date de naissance apres clic ********************************
@@ -226,33 +226,45 @@ function validbirthDate() {
 
 
 
+
 function checklocation() {
   const locationRadios = document.querySelectorAll('input[name="location"]');
-  console.log(locationRadios.value)
   let isLocationSelected = false;
+
+
+  
 
   for (let i = 0; i < locationRadios.length; i++) {
     if (locationRadios[i].checked) {
       isLocationSelected = true;
-      validRadioMsg.innerHTML = "";s
+      validRadioMsg.innerHTML = "";
       break;
     }
-    console.log(isLocationSelected)
   }
+  return isLocationSelected;
 
-  if (!isLocationSelected) {
-    
-    validRadioMsg.innerHTML = "Veuillez selectionner une ville ";
-  } 
+
 }
+
+
+
+
+
+
+
 
 // ******************** Validation la condition est selectionné  apres clic********************************
 
 function checkConditions() {
 
   if(form.accepte.checked == false){validConditionsMsg.innerHTML = "Veuillez accepter les conditions";
+
       return false;
-    }else {validConditionsMsg.innerHTML = "";
+
+    }else {
+      
+      validConditionsMsg.innerHTML = "";
+
       return true;
     }
     }
@@ -337,85 +349,74 @@ function checkPrenom() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const myForm = document.forms.namedItem('reserve');
+const myForm = document.forms.namedItem('reserve');
   const modal = document.querySelector('.modal');
   const mySubmit = document.querySelector('.btn-submit')
 
-  
+
+
+document.addEventListener('DOMContentLoaded', function() {
 
   myForm.addEventListener('submit', function(event) {
     event.preventDefault();
-
     let isValid = false;
-
-    if (
-      validbirthDate() &&
-      validTournement() &&
-      //  checklocation() &&
-      checkConditions() &&
-      checkEmail() &&
-      checkNom() &&
-      checkPrenom()
-
-    ) {
+    if ( checkPrenom() 
+    && validbirthDate()
+    && validTournement()
+    && checklocation()
+    && checkConditions()
+    && checkEmail()
+    && checkNom()) {
       isValid = true;
       modalbg.style.display = "none";
       modal.style.display = 'block';
-      console.log(isValid)
+      console.log(checklocation())
 
-      const xhr = new XMLHttpRequest();
-      xhr.open(myForm.method, myForm.action);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          console.log(xhr.responseText);
-        }
-      };
-      xhr.send(new FormData(myForm));
-    }
-
-
-    if (isValid) {
-      modalbg.style.display = "none";
-      modal.style.display = 'block';
     } else {
-      modal.style.display = 'none';
+
+
+      // Afficher un message d'erreur si nécessaire
+    if(checklocation() == false) {
+      validRadioMsg.innerHTML = "Veuillez entrer une ville";
+
+    } 
+    
+    if (checkConditions() == false){
+      validConditionsMsg.innerHTML = "Veuillez accepter les conditions";
+
     }
-  });
 
-  // mySubmit.addEventListener('click', function() {
+    if (checkPrenom() == false){
+      validFirstMsg.innerHTML = "Veuillez entrer un prénom";
+    }
+
+    if (checkNom() == false){
+      validLastMsg.innerHTML = "Veuillez entrer un nom";
+    }
+
+    if (checkEmail()== false){
+
+      validEmailMsg.innerHTML = "Veuillez entrer un e-mail";
+
+
+    }
+
+    if (validTournement() == false) {
+
+      validNumberOfTournementMsg.innerHTML ="Veuillez entrer un nombre";
+    }
+
+    if (validbirthDate()== false){
+
+      validbirthDateMsg.innerHTML='veuillez entrer votre date de naissance ';
+    }
+    
+    
+    }
+  })})
+
+
+
+
   
-  //   modalbg.style.display = "none";
-  //   modal.style.display = 'block';
-
-  // });
-});
-
-
-
-
-/************************** */
-
-
-// // Stocker les données du formulaire lorsqu'il est soumis
-// let myFormData = null;
-// const myForm = document.forms.namedItem("reserve");
-// myForm.addEventListener('submit', function(event) {
-//   event.preventDefault();
-
-//   if (validbirthDate() || validTournement() || checklocation() || checkConditions() || checkEmail() || checkNom() || checkPrenom()) {
-//     myFormData = new FormData(myForm);
-//     // Envoyer le formulaire avec AJAX ici si nécessaire
-//   }
-// });
-
-// // Remplir le formulaire avec les données stockées si elles existent
-// if (myFormData) {
-//   for (const [key, value] of formData.entries()) {
-//     const input = myForm.elements.namedItem(key);
-//     if (input) {
-//       input.value = value;
-//     }
-//   }
-// }
+  
