@@ -28,7 +28,7 @@ const validbirthDateMsg = document.querySelector(".validator-birthdate");
  const validConditionsMsg = document.querySelector('.validator-conditions');
 
 //regExp
-const regexFirstLast = new RegExp('^[\\p{L}-]{2,}$', 'iu');
+const regexFirstLast = new RegExp('^[\\p{L} -]{2,}$', 'iu');
 const regexEmail = new RegExp("^[a-z0-9!#$%&’*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&’*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$", "i");
 
 
@@ -228,21 +228,22 @@ function validbirthDate() {
 
 function checklocation() {
   const locationRadios = document.querySelectorAll('input[name="location"]');
+  console.log(locationRadios.value)
   let isLocationSelected = false;
 
   for (let i = 0; i < locationRadios.length; i++) {
     if (locationRadios[i].checked) {
       isLocationSelected = true;
+      validRadioMsg.innerHTML = "";s
       break;
     }
+    console.log(isLocationSelected)
   }
 
-  if (isLocationSelected) {
-    validRadioMsg.innerHTML = "";
-
-  } else {
+  if (!isLocationSelected) {
+    
     validRadioMsg.innerHTML = "Veuillez selectionner une ville ";
-  }
+  } 
 }
 
 // ******************** Validation la condition est selectionné  apres clic********************************
@@ -349,15 +350,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let isValid = false;
 
     if (
-      validbirthDate() ||
-      validTournement() ||
-      checklocation() ||
-      checkConditions() ||
-      checkEmail() ||
-      checkNom() ||
+      validbirthDate() &&
+      validTournement() &&
+      //  checklocation() &&
+      checkConditions() &&
+      checkEmail() &&
+      checkNom() &&
       checkPrenom()
+
     ) {
       isValid = true;
+      modalbg.style.display = "none";
+      modal.style.display = 'block';
+      console.log(isValid)
 
       const xhr = new XMLHttpRequest();
       xhr.open(myForm.method, myForm.action);
@@ -370,6 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
       xhr.send(new FormData(myForm));
     }
 
+
     if (isValid) {
       modalbg.style.display = "none";
       modal.style.display = 'block';
@@ -378,12 +384,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  mySubmit.addEventListener('click', function() {
+  // mySubmit.addEventListener('click', function() {
   
-    modalbg.style.display = "none";
-    modal.style.display = 'block';
+  //   modalbg.style.display = "none";
+  //   modal.style.display = 'block';
 
-  });
+  // });
 });
 
 
@@ -392,24 +398,24 @@ document.addEventListener('DOMContentLoaded', function() {
 /************************** */
 
 
-// Stocker les données du formulaire lorsqu'il est soumis
-let myFormData = null;
-const myForm = document.forms.namedItem("reserve");
-myForm.addEventListener('submit', function(event) {
-  event.preventDefault();
+// // Stocker les données du formulaire lorsqu'il est soumis
+// let myFormData = null;
+// const myForm = document.forms.namedItem("reserve");
+// myForm.addEventListener('submit', function(event) {
+//   event.preventDefault();
 
-  if (validbirthDate() || validTournement() || checklocation() || checkConditions() || checkEmail() || checkNom() || checkPrenom()) {
-    myFormData = new FormData(myForm);
-    // Envoyer le formulaire avec AJAX ici si nécessaire
-  }
-});
+//   if (validbirthDate() || validTournement() || checklocation() || checkConditions() || checkEmail() || checkNom() || checkPrenom()) {
+//     myFormData = new FormData(myForm);
+//     // Envoyer le formulaire avec AJAX ici si nécessaire
+//   }
+// });
 
-// Remplir le formulaire avec les données stockées si elles existent
-if (myFormData) {
-  for (const [key, value] of formData.entries()) {
-    const input = myForm.elements.namedItem(key);
-    if (input) {
-      input.value = value;
-    }
-  }
-}
+// // Remplir le formulaire avec les données stockées si elles existent
+// if (myFormData) {
+//   for (const [key, value] of formData.entries()) {
+//     const input = myForm.elements.namedItem(key);
+//     if (input) {
+//       input.value = value;
+//     }
+//   }
+// }
