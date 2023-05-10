@@ -29,7 +29,7 @@ const validRadioMsg = document.querySelector('.validator-radio');
 const validConditionsMsg = document.querySelector('.validator-conditions');
 //regExp
 const regexFirstLast = new RegExp('^[\\p{L} -]{2,}$', 'iu');
-const regexEmail = new RegExp("^[a-z0-9!#$%&’*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&’*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$", "i");
+const regexEmail = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
