@@ -160,7 +160,8 @@ main {
   font-size: 16px;
 }
 
-.bground {
+.bground,
+.modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -172,7 +173,8 @@ main {
   background-color: rgba(26, 39, 156, 0.4);
 }
 
-.content {
+.content,
+.new-modal-content {
   margin: 5% auto;
   width: 100%;
   max-width: 500px;
@@ -186,7 +188,14 @@ main {
   padding-top: 10px;
 }
 
-.modal-body {
+.new-modal-content {
+  height: 863px;
+
+  /* hauteur du new modal pour égaler le premier modal */
+}
+
+.modal-body,
+.modal-body-2 {
   padding: 15px 8%;
   margin: 15px auto;
 }
@@ -325,7 +334,8 @@ input[data-error]::after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.btn-new-modal {
   background: #fe142f;
   display: block;
   margin: 0 auto;
@@ -335,6 +345,28 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+
+.hero-text-modal {
+  /* font-weight: normal;
+  padding: 0;
+  width: 265px;
+  position: absolute; */
+  /* display: block; */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 275px;
+  width: 278px;
+  text-align: center;
+}
+
+.btn-new-modal {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: block;
+  margin-left: auto;
 }
 /* custom select styles */
 .custom-select {
@@ -408,7 +440,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  /* min-height: 93vh; element retiré*/
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -424,6 +456,7 @@ input[data-error]::after {
   position: relative;
   text-align: left;
   min-width: 424px;
+  height: 613px;
 }
 .hero-content::after {
   content: "";
@@ -462,10 +495,10 @@ input[data-error]::after {
 }
 .hero-img img {
   width: 100%;
-  min-height: 880px;
   object-fit: cover;
   display: block;
   padding: 0;
+  height: 613px;
 }
 .copyrights {
   color: #fe142f;
@@ -491,6 +524,7 @@ footer {
     background: #fff;
     color: #000;
     padding: 0; /*changement padding de 20 à 0 pour être aligné avec le logo*/
+    height: 210px; /*padding a 210 au lieu 613*/
   }
   .hero-content::after {
     content: unset;
@@ -511,6 +545,7 @@ footer {
   .hero-img img {
     border-radius: 10px;
     margin-top: 40px;
+    height: 100%;
   }
   .hero-section > .btn-signup {
     display: block;
@@ -538,34 +573,22 @@ footer {
   color: red;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-  animation: hide 10s forwards;
-}
-
-@keyframes hide {
-  70% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+.validator-conditions {
+  display: block;
 }
 
 .modal-content {
-  background-color: #6e78e3;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  margin: 5% auto;
+  width: 100%;
+  max-width: 500px;
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+  background: #232323;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  padding-top: 10px;
 }
 
 .close-btn {
