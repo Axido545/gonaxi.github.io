@@ -161,15 +161,10 @@ function checklocation() {
 }
 
 function checkConditions() {
-
   if(form.accepte.checked == false){validConditionsMsg.innerHTML = "Veuillez accepter les conditions";
-
       return false;
-
     }else {
-      
       validConditionsMsg.innerHTML = "";
-
       return true;
     }
     }
@@ -260,9 +255,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     }
   })})
-
-
-
-
-  
-  
