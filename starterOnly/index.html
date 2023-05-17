@@ -17,7 +17,7 @@
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-        <img alt="logo" src="Logo.png" width="auto" height="auto" />
+        <img alt="logo" src="Logo.png" />
       </div>
       <div class="main-navbar">
         <a href="#" class="active"><span>Accueil</span></a>
@@ -62,7 +62,12 @@
               <div class="formData">
                 <label for="first">Prénom</label
                 ><br /><!--Ajout de de for au label qui porte le nom de l'id-->
-                <input class="text-control" type="text" name="first" />
+                <input
+                  class="text-control"
+                  id="first"
+                  type="text"
+                  name="first"
+                />
                 <span class="validator-first validator-custom"></span>
 
                 <br />
@@ -70,20 +75,30 @@
               <div class="formData">
                 <label for="last">Nom</label
                 ><br /><!--Ajout de de for au label qui porte le nom de l'id-->
-                <input class="text-control" type="text" name="last" />
+                <input class="text-control" type="text" name="last" id="last" />
                 <span class="validator-last validator-custom"></span>
                 <br />
               </div>
               <div class="formData">
                 <label for="email">E-mail</label
                 ><br /><!--Ajout de de for au label qui porte le nom de l'id-->
-                <input class="text-control" name="email" />
+                <input
+                  class="text-control"
+                  type="email"
+                  name="email"
+                  id="email"
+                />
                 <span class="validator-email validator-custom"></span><br />
               </div>
               <div class="formData">
                 <label for="birthdate">Date de naissance</label
                 ><br /><!--Ajout de de for au label qui porte le nom de l'id-->
-                <input class="text-control" name="birthdate" type="date" />
+                <input
+                  class="text-control"
+                  name="birthdate"
+                  type="date"
+                  id="birthdate"
+                />
                 <span class="validator-birthdate validator-custom"></span><br />
 
                 <br />
@@ -97,6 +112,7 @@
                   class="text-control"
                   id="quantity"
                   name="quantity"
+                  type="number"
                   min="0"
                   max="99"
                 />
@@ -203,7 +219,7 @@
                     class="checkbox-icon"
                     type="checkbox"
                     name="me-prevenir"
-                    id="me-prenevir"
+                    id="me-prevenir"
                   />
                   Je souhaite être prévenu des prochains évènements.
                 </label>

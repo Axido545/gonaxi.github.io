@@ -83,67 +83,106 @@ function closeModal(){modalbg.style.display = "none";}
 const validFirst = function (inputFirst){
 
 if (inputFirst.value =="") {
-  validFirstMsg.innerHTML = "Veuillez entrer un prénom"
+  validFirstMsg.innerHTML = "Veuillez entrer un prénom";
+  form.first.style.borderColor ="red";
+
 } else if (inputFirst.value.length < 2){
-  validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+  validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+  form.first.style.borderColor ="red";
+
 }else if (regexFirstLast.test(inputFirst.value)){
-  validFirstMsg.innerHTML = ""
+  validFirstMsg.innerHTML = "";
+  form.first.style.borderColor ="black";
+
 }else {
-  validFirstMsg.innerHTML = "Veuillez entrer un prénom valide"
+  validFirstMsg.innerHTML = "Veuillez entrer un prénom valide";
+  form.first.style.borderColor ="red";
+
 }
 }
 
 const validLast = function (inputLast){
   if (inputLast.value == "") {
-    validLastMsg.innerHTML = "Veuillez entrer un nom"
+    validLastMsg.innerHTML = "Veuillez entrer un nom";
+    form.last.style.borderColor ="red";
+
   }
   else if (inputLast.value.length < 2){
-    validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    form.last.style.borderColor ="red";
+
   }else if (regexFirstLast.test(inputLast.value)){
     validLastMsg.innerHTML = ""
+    form.last.style.borderColor ="black";
+
   }else {
     validLastMsg.innerHTML = "Veuillez entrer un nom valide"
+    form.last.style.borderColor ="red";
+
   }
 }
 
 const validEmail = function (inputEmail){
   if(inputEmail == ""){
     validEmailMsg.innerHTML = "Veuillez entrer un e-mail";
+    form.email.style.borderColor ="red";
+
+    
   } else if (regexEmail.test(inputEmail.value)){
     validEmailMsg.innerHTML = "";
+    form.email.style.borderColor ="black";
+
   }else {
     validEmailMsg.innerHTML = "Veuillez entrer un e-mail valide";
+    form.email.style.borderColor ="red";
+
   }
 }
 
  const validNumberOfTournement = function(nbOfTournementPosted){
  if(nbOfTournementPosted.value == ""){
   validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+  form.quantity.style.borderColor ="red";
+
  } else if ( isNaN(nbOfTournementPosted.value) == true){
   validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+  form.quantity.style.borderColor ="red";
+
   } else {
     validNumberOfTournementMsg.innerHTML = "";
+    form.quantity.style.borderColor ="black";
+
   }
 };
 
 function validbirthDate() {
   if (form.birthdate.value === '') {
     validbirthDateMsg.innerHTML = "Vous devez entrer votre date de naissance";
+    form.birthdate.style.borderColor ="red";
+
     return false;
   }
   validbirthDateMsg.innerHTML = "";
+  form.birthdate.style.borderColor ="black";
+
   return true;
 }
 
  function validTournement() {
    if (form.quantity.value === '') {
     validNumberOfTournementMsg.innerHTML = "Vous devez un nombre de tournoi";
+    form.quantity.style.borderColor ="red";
+
  return false;
    }else if ( isNaN(form.quantity.value) == true){
     validNumberOfTournementMsg.innerHTML = "Veuiller entrer un nombre";
+    form.quantity.style.borderColor ="red";
+
     return false;
     } else {
       validNumberOfTournementMsg.innerHTML = "";
+      form.quantity.style.borderColor ="black";
+
       return true;
     }
  }
@@ -172,29 +211,38 @@ function checkConditions() {
 function checkEmail() {
   if(form.email == ""){
     validEmailMsg.innerHTML = "Veuillez entrer un e-mail";
+    form.email.style.borderColor ="red";
+
     return false;
   } else if (regexEmail.test(form.email.value)){
     validEmailMsg.innerHTML = "";
+    form.email.style.borderColor ="black";
      return true;
   }else {
     validEmailMsg.innerHTML = "Veuillez entrer un e-mail valide";
+    form.email.style.borderColor ="red";
     return false;
   }
 }
 
 function checkNom() {
   if (form.last.value == "") {
-    validLastMsg.innerHTML = "Veuillez entrer un nom"
+    validLastMsg.innerHTML = "Veuillez entrer un nom";
+    form.last.style.borderColor ="red";
     return false;
   }
   else if (form.last.value.length < 2){
-    validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    validLastMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    form.last.style.borderColor ="red";
     return false;
   }else if (regexFirstLast.test(form.last.value)){
     validLastMsg.innerHTML = ""
+    form.last.style.borderColor ="black";
+
     return true;
   }else {
-    validLastMsg.innerHTML = "Veuillez entrer un nom valide"
+    validLastMsg.innerHTML = "Veuillez entrer un nom valide";
+    form.last.style.borderColor ="red";
     return false;
   }
 }
@@ -202,18 +250,26 @@ function checkNom() {
 function checkPrenom() {
   if (form.first.value =="") {
     validFirstMsg.innerHTML = "Veuillez entrer un prénom"
+    form.first.style.borderColor ="red";
     return false;
   } else if (form.first.value.length < 2){
     validFirstMsg.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+    form.first.style.borderColor ="red";
     return false;
   }else if (regexFirstLast.test(form.first.value)){
     validFirstMsg.innerHTML = ""
+    form.first.style.borderColor ="black";
+
     return true;
   }else {
     validFirstMsg.innerHTML = "Veuillez entrer un prénom valide"
+    form.first.style.borderColor ="red";
     return false;
   }
 }
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -234,24 +290,33 @@ document.addEventListener('DOMContentLoaded', function() {
       // Afficher un message d'erreur si nécessaire
     if(checklocation() == false) {
       validRadioMsg.innerHTML = "Veuillez entrer une ville";
+     
     } 
     if (checkConditions() == false){
       validConditionsMsg.innerHTML = "Veuillez lire et accepté les conditions d'utilisation.";
     }
     if (checkPrenom() == false){
       validFirstMsg.innerHTML = "Veuillez entrer un prénom";
+      form.first.style.borderColor ="red";
     }
     if (checkNom() == false){
       validLastMsg.innerHTML = "Veuillez entrer un nom";
+      form.last.style.borderColor ="red";
     }
     if (checkEmail()== false){
       validEmailMsg.innerHTML = "Veuillez entrer un e-mail";
+      form.email.style.borderColor ="red";
+
     }
     if (validTournement() == false) {
       validNumberOfTournementMsg.innerHTML ="Veuillez entrer un nombre";
+      form.quantity.style.borderColor ="red";
+
     }
     if (validbirthDate()== false){
       validbirthDateMsg.innerHTML='veuillez entrer votre date de naissance ';
+      form.birthdate.style.borderColor ="red";
+
     }
     }
   })})
